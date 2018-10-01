@@ -1,0 +1,86 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 03.04.2018 15:25:08
+
+newmtl bmw_m3_gtr_BMW_M3_GTR_Tread7
+	Ns 56.1582
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.8000 0.8000 0.8000
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.5000 0.5000 0.5000
+	map_Ka TREAD MI.jpg
+	map_Kd TREAD MI.jpg
+
+newmtl bmw_m3_gtr_BMW_M3_GTR_TIRE7
+	Ns 56.1582
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.8000 0.8000 0.8000
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.5000 0.5000 0.5000
+	map_Ka BMWM3GTRE46_TIRE.jpg
+	map_Kd BMWM3GTRE46_TIRE.jpg
+
+newmtl bmw_m3_gtr_BMW_M3_GTR_TIRE_chrome7
+	Ns 56.1131
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.8000 0.8000 0.8000
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.5000 0.5000 0.5000
+	map_Ka BMWM3GTRE46_TIRE.jpg
+	map_Kd BMWM3GTRE46_TIRE.jpg
+
+newmtl bmw_m3_gtr_BMW_M3_GTR_MISC7
+	Ns 56.1582
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.8000 0.8000 0.8000
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.5000 0.5000 0.5000
+	map_Ka BMWM3GTRE46_MISC.jpg
+	map_Kd BMWM3GTRE46_MISC.jpg
+	map_bump BMWM3GTR.jpg
+	bump BMWM3GTR.jpg
+
+newmtl bmw_m3_gtr_BMW_M3_GTR_BRAKDISC7
+	Ns 55.7494
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.8000 0.8000 0.8000
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.5000 0.5000 0.5000
+	map_Ka BRAKDISC.jpg
+	map_Kd BRAKDISC.jpg
+
+newmtl bmw_m3_gtr_BMW_M3_GTR_Chrome7
+	Ns 55.4924
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.8000 0.8000 0.8000
+	Kd 0.4096 0.4096 0.4096
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.5000 0.5000 0.5000

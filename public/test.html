@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="js/libs/jquery/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/libs/three/three.js"></script>
+    <script>
+        class coord
+        {
+            constructor(position, rotation, scale)
+            {
+                this.position = position;
+                this.rotation = rotation;
+                this.scale = scale;
+            }
+        }
+
+        function getRandomPos(max, min)
+        {
+            var nAux = 0;    
+            nAux = Math.random() * (max - min) + min;
+            if (nAux > (max / 2))
+                nAux = (nAux / 2 * -1);
+            return nAux.toFixed(2);
+        }
+        var numRan = [];
+        function getCoord()
+        {
+            numRan.push(new coord(
+                new THREE.Vector3(getRandomPos(60, 0), 0, getRandomPos(26, 0)),
+                new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(1, 1, 1)
+            ));
+        }
+        for(var i = 0; i < 10; i++)
+        {
+
+            getCoord();
+            console.log("Position [x, z] [" + numRan[i].position.x + "," + numRan[i].position.z + "]");
+        }
+        
+        
+        
+
+            
+/*
+            console.log("Your lucky numbers:");
+            for (var i = 0; i < array.length; i++) {
+                console.log(array[i]);
+            }
+*/
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

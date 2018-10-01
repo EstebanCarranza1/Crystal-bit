@@ -1,0 +1,11 @@
+song_00: max revive_composed by kieran zane roberts.mp3
+song_01: not dead yet! (battle theme) chiptune remix.mp3
+song_02: Mattashi - Lost in Pixels [Adventurous 8-Bit Music].mp3
+song_03: Chiptune Music - Ready For Battle.mp3
+song_04: Spanish Flea 8-bit.mp3
+song_05: Thaehan - Final Boss (ElectroBaroqueChiptune).mp3
+song_06: Awesome 8bit THE MASSACRE.mp3
+song_07: Overload -Chiptune Mix-.mp3
+song_08: Shadowblaze - Champion Battle (Undertale-inspired Original Music).mp3
+song_09: Theory of N - Buttdawg Funk [Chiptune].mp3
+song_10: Zabutom, Dubmood and Blz - Chaos 1.mp3
