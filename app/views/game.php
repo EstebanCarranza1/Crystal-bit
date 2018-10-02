@@ -22,6 +22,7 @@
 	<script type="text/javascript" src="js/libs/three/MTLLoader.js"></script>
 	<script type="text/javascript" src="js/libs/three/OBJLoader.js"></script>
 	<script type="text/javascript"> var mode_debug = false; </script>
+	<script type="text/javascript" src="js/globvar.js"></script>
 	<script type="text/javascript" src="js/cargaModelo.js"></script>
 	<script type="text/javascript" src="js/cristales.js"></script>
 	<script type="text/javascript" src="js/autos.js"></script>

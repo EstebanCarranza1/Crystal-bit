@@ -7,24 +7,27 @@ function cargar_items_y_obstaculos() {
     var items_pathItemsFolder = [];
     var items_pathItemsOBJ = [];
     var items_pathItemsMTL = [];
-    var items_scaleMaster = 0.2;
+    var items_scaleMaster = [];
 
     items_pathItemsFolder[0] = "media/assets/item/";
     items_pathItemsOBJ[0] = "item_change.obj";
     items_pathItemsMTL[0] = "item_change.mtl";
+    items_scaleMaster[0] = 0.2;
 
     items_pathItemsFolder[1] = "media/assets/item/";
     items_pathItemsOBJ[1] = "item_movent.obj";
     items_pathItemsMTL[1] = "item_movent.mtl";
+    items_scaleMaster[1] = 0.2;
 
     items_pathItemsFolder[2] = "media/assets/item/";
     items_pathItemsOBJ[2] = "item_speed.obj";
     items_pathItemsMTL[2] = "item_speed.mtl";
+    items_scaleMaster[2] = 0.2;
 
     loadOBJWithMTL(items_pathItemsFolder[0], items_pathItemsOBJ[0], items_pathItemsMTL[0], (object) => {
         if (mode_debug) debugger;
 
-        object.scale.set(items_scaleMaster, items_scaleMaster, items_scaleMaster);
+        object.scale.set(items_scaleMaster[0], items_scaleMaster[0], items_scaleMaster[0]);
         object.rotation.set(0, 0, 0);
         object.position.set(0, 5, 0);
        object.name = "item_change";
@@ -35,7 +38,7 @@ function cargar_items_y_obstaculos() {
     loadOBJWithMTL(items_pathItemsFolder[1], items_pathItemsOBJ[1], items_pathItemsMTL[1], (object) => {
         if (mode_debug) debugger;
 
-        object.scale.set(items_scaleMaster, items_scaleMaster, items_scaleMaster);
+        object.scale.set(items_scaleMaster[1], items_scaleMaster[1], items_scaleMaster[1]);
         object.rotation.set(0, 0, 0);
         object.position.set(10, 5, 0);
         object.name = "item_movent";
@@ -46,7 +49,7 @@ function cargar_items_y_obstaculos() {
     loadOBJWithMTL(items_pathItemsFolder[2], items_pathItemsOBJ[2], items_pathItemsMTL[2], (object) => {
         if (mode_debug) debugger;
 
-        object.scale.set(items_scaleMaster, items_scaleMaster, items_scaleMaster);
+        object.scale.set(items_scaleMaster[2], items_scaleMaster[2], items_scaleMaster[2]);
         object.rotation.set(0, 0, 0);
         object.position.set(-10, 5, 0);
         object.name = "item_speed";
@@ -56,26 +59,53 @@ function cargar_items_y_obstaculos() {
     });
 
     //---------------------------------------- OBSTACULOS --------------------------------------------------------------------------------
+    
+    
     var obstaculos_pathItemsFolder = [];
     var obstaculos_pathItemsOBJ = [];
     var obstaculos_pathItemsMTL = [];
-    var obstaculos_scaleMaster = 0.04;
+    var obstaculos_scaleMaster = [];
 
     obstaculos_pathItemsFolder[0] = "media/assets/maps/rock/";
     obstaculos_pathItemsOBJ[0] = "rock.obj";
     obstaculos_pathItemsMTL[0] = "rock.mtl";
+    obstaculos_scaleMaster[0] = 0.03;
     loadOBJWithMTL(obstaculos_pathItemsFolder[0], obstaculos_pathItemsOBJ[0], obstaculos_pathItemsMTL[0], (object) => {
         if (mode_debug) debugger;
 
-        object.scale.set(obstaculos_scaleMaster, obstaculos_scaleMaster, obstaculos_scaleMaster);
+        object.scale.set(obstaculos_scaleMaster[0], obstaculos_scaleMaster[0], obstaculos_scaleMaster[0]);
         object.rotation.set(0, 0, 0);
-        object.position.set(0,0, 0);
-        object.name = "rock";
+        object.position.set(0, 0, 0);
+        
 
-        for(var i = 0; i < 10; i++)
-            
+        for (var i = 0; i < total_obstaculos; i++) {
+            object.name = "rock-" + i;
+            obstaculos[i].add(object.clone());
+        }
 
-        scene.add(object);
+        //scene.add(object);
+        if (mode_debug)
+            debugger;
+    });
+
+    obstaculos_pathItemsFolder[1] = "media/assets/maps/cristal/";
+    obstaculos_pathItemsOBJ[1] = "crystal.obj";
+    obstaculos_pathItemsMTL[1] = "crystal.mtl";
+    obstaculos_scaleMaster[1] = 0.1;
+    loadOBJWithMTL(obstaculos_pathItemsFolder[1], obstaculos_pathItemsOBJ[1], obstaculos_pathItemsMTL[1], (object) => {
+        if (mode_debug) debugger;
+
+        object.scale.set(obstaculos_scaleMaster[1], obstaculos_scaleMaster[1], obstaculos_scaleMaster[1]);
+        object.rotation.set(0, 0, 0);
+        object.position.set(0, 0, 0);
+        
+
+        for (var i = 0; i < total_obstaculos; i++) {
+            //object.name = cristal_name + "-" + i;
+            cristales[i].add(object.clone());
+        }
+
+        //scene.add(object);
         if (mode_debug)
             debugger;
     });

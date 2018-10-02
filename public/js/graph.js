@@ -13,22 +13,32 @@ var total_players = 2;
 var cristales = [];
 var obstaculos = [];
 var pause = false;
+//Considerar darle la libertad al jugador de elegir el numero
 var total_cristales = 50;
 var total_obstaculos = 50;
 var _PAUSE_GAME = false;
+
 //var cristal_model;
 
 
 function setTotalCristalesGUI() {
     $("#lblTotalCristalesRestantes").html("&nbsp;" + total_cristales);
+    if(player != null)
+    {
+        $("#lblPlayer_01_Points").html("&nbsp;" + player[0].puntuacion);
+        $("#lblPlayer_02_Points").html("&nbsp;" + player[1].puntuacion);
+    }
+    
 }
 
 function crear_obstaculos() {
+    
+ 
     var geometry = new THREE.SphereGeometry(1, 32, 32);
     var material = new THREE.MeshLambertMaterial
         (
         {
-            color: new THREE.Color(0, 0, 1)
+                color: new THREE.Color(0, 0, 1), opacity: 0.0, transparent: true
         }
         );
 
@@ -38,6 +48,7 @@ function crear_obstaculos() {
         obstaculos.push(obstaculo.clone());
         scene.add(obstaculos[i]);
     }
+  
 }
 
 function crear_cristales() {
@@ -45,7 +56,8 @@ function crear_cristales() {
     var material = new THREE.MeshLambertMaterial
         (
         {
-            color: new THREE.Color(0, 1, 0)
+                color: new THREE.Color(0, 1, 0), opacity: 0.0, transparent: true
+            
         }
         );
 
@@ -103,6 +115,27 @@ function validar_colision(idPlayer) {
             console.log("colision_cristales");
 
             scene.remove(colision_cristales[0].object);
+            for(var j = 0; j < cristales.length; j++)
+            {
+               
+                if (cristales[j].name == colision_cristales[0].object.name)
+                {
+                    //debugger;
+                    cristales.splice(j, 1);
+                    total_cristales--;
+                    if(player != null)
+                    {
+                        player[idPlayer].puntuacion++;
+                        localStorage.setItem("gamepoints_01", player[0].puntuacion);
+                        localStorage.setItem("gamepoints_02", player[1].puntuacion);
+                    }
+                    setTotalCristalesGUI();
+                }
+                    
+
+            }
+
+                
             //total_cristales--;
             //setTotalCristalesGUI();
         }
@@ -159,7 +192,7 @@ function crear_cubo_principal() {
         player[i].rotation.y = player[i].initialPos.rotation.y;
         player[i].rotation.z = player[i].initialPos.rotation.z;
 
-
+        player[i].puntuacion = 0;
 
     }
 
@@ -227,10 +260,46 @@ class controller {
 
     }
 }
-function render() {
-    requestAnimationFrame(render);
-    deltaTime = clock.getDelta();
+var endgame = false;
+var passDebugg = 0;
+function finalizar_juego()
+{
+    if(!endgame)
+    {
+        passDebugg++;
+        $(".clsP_MenuPause").show();
+        $(".clsPanelPuntuaciones").show();
+        //$(".clsP_ContinuarJuego").show();
+        $(".clsP_Salir").show();
+        //$(".clsP_TestInsert").show();
+        $(".PUN_row").remove();
+        $("#idPun_CabeceraText").html("FIN DE LA PARTIDA");
+        agregarPartida
+            (
+            localStorage.getItem("gamename_01"),
+            localStorage.getItem("gamepoints_01"),
+            localStorage.getItem("gamename_02"),
+            localStorage.getItem("gamepoints_02")
+            );
 
+        setTimeout(function () {
+            obtenerPuntuaciones(0, 1, '#bodyTab01');
+        }, 1000);
+       
+        endgame = true;
+        
+    }
+        
+}
+function render() {
+
+    if(!endgame)
+    {
+        requestAnimationFrame(render);
+        deltaTime = clock.getDelta();
+
+    }
+    
     //if (scene.getObjectByName("skydome") != null) {
         scene.getObjectByName("skydome").rotation.x += 0.001;
         scene.getObjectByName("skydome").rotation.y += 0.001;
@@ -239,7 +308,13 @@ function render() {
         (scene.getObjectByName("item_speed").rotation.y < 360) ? scene.getObjectByName("item_speed").rotation.y += 0.1 : scene.getObjectByName("item_speed").rotation.y = 0;
 
     //}
-   
+    if (cristales!=null)
+    for (var i = 0; i < cristales.length; i++)
+   {
+       if(scene.getObjectByName(cristal_name+ "-" + i) != null)
+       (scene.getObjectByName(cristal_name + "-" + i).rotation.y < 360) ? scene.getObjectByName(cristal_name + "-" + i).rotation.y += 0.1 : scene.getObjectByName(cristal_name + "-" + i).rotation.y = 0;
+   }
+    
 
     for (var i = 0; i < total_players; i++) {
         //Hay que inicializar yaw y forward a 0 para evitar que el 
@@ -271,11 +346,7 @@ function render() {
             player[0].translateZ(forward * deltaTime);
     */
     if (keys["L"]) {
-        $(".clsP_MenuPause").show();
-        $(".clsPanelPuntuaciones").show();
-        $(".clsP_ContinuarJuego").show();
-        $(".clsP_Salir").show();
-        $(".clsP_TestInsert").show();
+       finalizar_juego();
     }
     if (keys["P"]) {
         activar_menu_pause(true, "#musicList");
@@ -324,6 +395,9 @@ function render() {
     camera.position.y = 25;
     camera.position.z = 40;
     camera.rotation.x = THREE.Math.degToRad(-35);
+
+    if(total_cristales == 0)
+        finalizar_juego();
     
     renderer.render(scene, camera);
 }

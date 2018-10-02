@@ -5,7 +5,7 @@ var rotar_skydome = 0;
 function cargar_escenario()
 {
 
-    loadOBJWithMTL("media/assets/maps/escenario_01/", "escenario_01_01.obj", "escenario_01_01.mtl", (object) => {
+    loadOBJWithMTL("media/assets/maps/escenario_02/", "escenario_01_02.obj", "escenario_01_02.mtl", (object) => {
             if (mode_debug) debugger;
 
             object.scale.set(0.3, 0.3, 0.3);

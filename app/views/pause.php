@@ -21,7 +21,7 @@
 
         border-radius:5px;
         margin-top:5%;
-        max-height:500px;
+        max-height:600px;
         overflow:auto;
 
            
@@ -74,7 +74,7 @@
                 <div class="card horizontal blue hoverable">
                     <div  class="card-stacked">
                         <div class="card-action">
-                        <a href="#"  class="white-text">Irse alv!</a>
+                        <a href="#"  class="white-text">Regresar al menu principal</a>
                         </div>
                     </div>
                 </div>
@@ -168,14 +168,14 @@
             $(".clsP_TestInsert").click(function(){
                  $(".PUN_row").remove();
                 $("#idPun_CabeceraText").html("FIN DE LA PARTIDA");
-                agregarPartida
+                /*agregarPartida
                 (
                     localStorage.getItem("gamename_01"), 
                     localStorage.getItem("gamepoints_01"), 
                     localStorage.getItem("gamename_02"), 
                     localStorage.getItem("gamepoints_02")
-                );
-                obtenerPuntuaciones(0, 1, '#bodyTab01');
+                );*/
+                //obtenerPuntuaciones(0, 1, '#bodyTab01');
             });
 
         }
