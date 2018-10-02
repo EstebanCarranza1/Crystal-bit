@@ -1,16 +1,16 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 25.09.2018 17:49:49
+# File Created: 02.10.2018 15:14:37
 
-newmtl _itemlambert2SG
-	Ns 30.0000
+newmtl mat_rock
+	Ns 0.0000
 	Ni 1.5000
 	d 1.0000
 	Tr 0.0000
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.5000 0.5000 0.5000
-	Kd 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka item_change_cristal.png
-	map_Kd item_change_cristal.png
+	map_Ka piedra.jpg
+	map_Kd piedra.jpg

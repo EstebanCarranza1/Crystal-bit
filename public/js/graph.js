@@ -202,6 +202,8 @@ $(document).ready(function () {
     posicionar_cristales();
     posicionar_obstaculos();
     crear_rayos_para_objeto();
+    cargar_escenario();
+    cargar_items_y_obstaculos();
     render();
 });
 
@@ -229,8 +231,15 @@ function render() {
     requestAnimationFrame(render);
     deltaTime = clock.getDelta();
 
+    //if (scene.getObjectByName("skydome") != null) {
+        scene.getObjectByName("skydome").rotation.x += 0.001;
+        scene.getObjectByName("skydome").rotation.y += 0.001;
+        (scene.getObjectByName("item_change").rotation.y < 360) ? scene.getObjectByName("item_change").rotation.y += 0.1 : scene.getObjectByName("item_change").rotation.y = 0;
+        (scene.getObjectByName("item_movent").rotation.y < 360) ? scene.getObjectByName("item_movent").rotation.y += 0.1 : scene.getObjectByName("item_movent").rotation.y = 0;
+        (scene.getObjectByName("item_speed").rotation.y < 360) ? scene.getObjectByName("item_speed").rotation.y += 0.1 : scene.getObjectByName("item_speed").rotation.y = 0;
 
-
+    //}
+   
 
     for (var i = 0; i < total_players; i++) {
         //Hay que inicializar yaw y forward a 0 para evitar que el 
@@ -311,10 +320,11 @@ function render() {
 
     /*Efecto de camara*/
     //camera.lookAt(player[0].position);
+    //FIJAR POSICION DE LA CAMARA
     camera.position.y = 25;
-    camera.position.z = 35;
-    camera.rotation.x = THREE.Math.degToRad(-45);
-
+    camera.position.z = 40;
+    camera.rotation.x = THREE.Math.degToRad(-35);
+    
     renderer.render(scene, camera);
 }
 
@@ -323,7 +333,7 @@ function setupScene() {
     //var visibleSize = { width: 900 , height: 550};
     clock = new THREE.Clock();
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 100);
+    camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 500);
     //camera.position.z = 0;
     //camera.position.y = 1;
     //camera.rotation.x = 90;
