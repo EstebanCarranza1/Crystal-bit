@@ -87,7 +87,10 @@ function crear_rayos_para_objeto() {
                 new THREE.Vector3(0, 0, 1), 	// rayo en +z (hacia atrás)
                 new THREE.Vector3(0, 0, -1), 	// rayo en -z (hacia adelante)
                 new THREE.Vector3(1, 0, 0), 	// rayo en +x (hacia la izquierda)
-                new THREE.Vector3(-1, 0, 0)	// rayo en -x (hacia la derecha)
+                new THREE.Vector3(-1, 0, 0), 	// rayo en -x (hacia la derecha)
+                new THREE.Vector3(0,1,0),        // rayo en +y (hacia arriba)
+                new THREE.Vector3(0,-1,0)        // rayo en -y (hacia abajo )
+
             ];
         raycaster[i] = new THREE.Raycaster();
     }
@@ -104,12 +107,13 @@ function crear_rayos_para_objeto() {
 }
 var colision_cristales;
 var colision_obstaculos;
+var colision_items;
 function validar_colision(idPlayer) {
     for (var i = 0; i < player[idPlayer].rayos.length; i++) {
         raycaster[idPlayer].set(player[idPlayer].position, player[idPlayer].rayos[i]);
         colision_cristales = raycaster[idPlayer].intersectObjects(cristales, false);
         colision_obstaculos = raycaster[idPlayer].intersectObjects(obstaculos, false);
-
+        colision_items = raycaster[idPlayer].intersectObjects(master_items, true);
 
         if (colision_cristales.length > 0 && colision_cristales[0].distance < 2) {
             console.log("colision_cristales");
@@ -151,6 +155,15 @@ function validar_colision(idPlayer) {
                 player[idPlayer].control.forward = (player[idPlayer].control.velocity) * rebote;
             //scene.remove(colision_obstaculos[0].object);
 
+
+        }
+        if (colision_items.length > 0 && colision_items[0].distance < 1) {
+
+            console.log("colision_items " + colision_items[0].object.parent.name);
+
+            colision_items[0].object.parent.position.set(getRandomPos(60, 0, 0), 0, getRandomPos(50, 0));
+        
+            $(".clsGUI_MasterMessage").append( "Obtenido [" + colision_items[0].object.parent.name + "] <br>");
 
         }
 
@@ -196,8 +209,8 @@ function crear_cubo_principal() {
 
     }
 
-    player[0].control = new controller(0, 0, 10, 0.25, "A", "W", "S", "D");
-    player[1].control = new controller(0, 0, 10, 0.25, "%", "&", "(", "'");
+    player[0].control = new controller(0, 0, 30, 0.25, "A", "W", "S", "D");
+    player[1].control = new controller(0, 0, 30, 0.25, "%", "&", "(", "'");
 
 }
 var P_idAudioControl;
@@ -237,6 +250,7 @@ $(document).ready(function () {
     crear_rayos_para_objeto();
     cargar_escenario();
     cargar_items_y_obstaculos();
+    cargar_animaciones();
     render();
 });
 
@@ -291,23 +305,71 @@ function finalizar_juego()
     }
         
 }
+var spawnTimeChange = 0;
+var spawnTimeSpeed = 0;
+var spawnTimeMovent = 0;
+var showMasterMessage = 0;
 function render() {
-
+   
     if(!endgame)
     {
         requestAnimationFrame(render);
         deltaTime = clock.getDelta();
 
     }
-    
-    //if (scene.getObjectByName("skydome") != null) {
-        scene.getObjectByName("skydome").rotation.x += 0.001;
-        scene.getObjectByName("skydome").rotation.y += 0.001;
-        (scene.getObjectByName("item_change").rotation.y < 360) ? scene.getObjectByName("item_change").rotation.y += 0.1 : scene.getObjectByName("item_change").rotation.y = 0;
-        (scene.getObjectByName("item_movent").rotation.y < 360) ? scene.getObjectByName("item_movent").rotation.y += 0.1 : scene.getObjectByName("item_movent").rotation.y = 0;
-        (scene.getObjectByName("item_speed").rotation.y < 360) ? scene.getObjectByName("item_speed").rotation.y += 0.1 : scene.getObjectByName("item_speed").rotation.y = 0;
+    /*
+    var master_items_render = scene.getObjectByName("master_items");
+    var item_change = scene.getObjectByName("master_items").children[0];
+    cristales[i].position.set(getRandomPos(60, 0, 0), 0, getRandomPos(50, 0));*/
+    //var itemX2 = itemX1;
 
-    //}
+    //itemX2.position.y = 4;
+    //scene.add(itemX2);
+    
+
+    var skydome = scene.getObjectByName("skydome");
+    if (skydome != null) {
+        skydome.rotation.x += 0.001;
+        skydome.rotation.y += 0.001;
+    }
+    var item_change = scene.getObjectByName("item_change");
+    if(item_change != null)
+    {
+        (item_change.rotation.y < 360) ? item_change.rotation.y += 0.1 : item_change.rotation.y = 0;
+        if(spawnTimeChange > 5)
+        {
+            //item_change.position.set(getRandomPos(60, 0, 0), 5, getRandomPos(50, 0));
+            item_change.position.set(getRandomPos(60, 0, 0), 0, getRandomPos(50, 0));
+            spawnTimeChange = 0;
+        }
+        
+    }
+    
+    spawnTimeChange+=deltaTime;
+
+    var item_movent = scene.getObjectByName("item_movent");
+    if(item_movent != null)
+    {
+        (item_movent.rotation.y < 360) ? item_movent.rotation.y += 0.1 : item_movent.rotation.y = 0;
+        if (spawnTimeMovent > 5) {
+            //item_movent.position.set(getRandomPos(60, 0, 0), 5, getRandomPos(50, 0));
+            item_movent.position.set(getRandomPos(60, 0, 0),0, getRandomPos(50, 0));
+            spawnTimeMovent = 0;
+        }
+    }
+    spawnTimeMovent += deltaTime;
+    var item_speed =  scene.getObjectByName("item_speed");
+    if(item_speed != null)
+    {
+        (item_speed.rotation.y < 360) ? item_speed.rotation.y += 0.1 : item_speed.rotation.y = 0;
+        if (spawnTimeSpeed > 5) {
+           // item_speed.position.set(getRandomPos(60, 0, 0), 5, getRandomPos(50, 0));
+            item_speed.position.set(getRandomPos(60, 0, 0), 0, getRandomPos(50, 0));
+            spawnTimeSpeed = 0;
+        }
+    }
+    spawnTimeSpeed += deltaTime;
+    
     if (cristales!=null)
     for (var i = 0; i < cristales.length; i++)
    {
@@ -388,6 +450,11 @@ function render() {
     }
 
 
+    if (showMasterMessage > 5) {
+        $(".clsGUI_MasterMessage").html("");
+        showMasterMessage = 0;
+    }
+    showMasterMessage += deltaTime;
 
     /*Efecto de camara*/
     //camera.lookAt(player[0].position);

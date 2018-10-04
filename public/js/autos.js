@@ -18,7 +18,8 @@ class auto_model {
             object.position.x = transform.position.x;
             object.position.y = transform.position.y;
             object.position.z = transform.position.z;
-
+//debugger;
+object.name = "player-" + index;
             player[index].add(object);
             if (mode_debug)
             debugger;

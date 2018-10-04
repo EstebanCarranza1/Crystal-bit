@@ -1,8 +1,12 @@
+//var master_items = [];
 
-
+function spawnear_items()
+{
+    
+}
 
 function cargar_items_y_obstaculos() {
-
+    
     //---------------------------------------- ITEMS --------------------------------------------------------------------------------
     var items_pathItemsFolder = [];
     var items_pathItemsOBJ = [];
@@ -24,14 +28,17 @@ function cargar_items_y_obstaculos() {
     items_pathItemsMTL[2] = "item_speed.mtl";
     items_scaleMaster[2] = 0.2;
 
+  
     loadOBJWithMTL(items_pathItemsFolder[0], items_pathItemsOBJ[0], items_pathItemsMTL[0], (object) => {
         if (mode_debug) debugger;
 
         object.scale.set(items_scaleMaster[0], items_scaleMaster[0], items_scaleMaster[0]);
         object.rotation.set(0, 0, 0);
-        object.position.set(0, 5, 0);
+        object.position.set(0, 0, 0);
        object.name = "item_change";
-        scene.add(object);
+       master_items.push(object.clone());
+        scene.add(master_items[0]);
+        
         if (mode_debug)
             debugger;
     });
@@ -40,9 +47,12 @@ function cargar_items_y_obstaculos() {
 
         object.scale.set(items_scaleMaster[1], items_scaleMaster[1], items_scaleMaster[1]);
         object.rotation.set(0, 0, 0);
-        object.position.set(10, 5, 0);
+        object.position.set(0, 0, 0);
         object.name = "item_movent";
-        scene.add(object);
+        //master_items[1].push(object.clone());
+        master_items.push(object.clone());
+        scene.add(master_items[1]);
+        
         if (mode_debug)
             debugger;
     });
@@ -50,10 +60,12 @@ function cargar_items_y_obstaculos() {
         if (mode_debug) debugger;
 
         object.scale.set(items_scaleMaster[2], items_scaleMaster[2], items_scaleMaster[2]);
-        object.rotation.set(0, 0, 0);
-        object.position.set(-10, 5, 0);
+        object.rotation.set(0,0, 0);
+        object.position.set(0, 0, 0);
         object.name = "item_speed";
-        scene.add(object);
+        master_items.push(object.clone());
+        scene.add(master_items[2]);
+        
         if (mode_debug)
             debugger;
     });

@@ -1,6 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
+<meta http-equiv="Expires" content="0">
+  <meta http-equiv="Last-Modified" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+  <meta http-equiv="Pragma" content="no-cache">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Cristal bit</title>
@@ -21,6 +25,8 @@
 	<script type="text/javascript" src="js/libs/three/three.js"></script>
 	<script type="text/javascript" src="js/libs/three/MTLLoader.js"></script>
 	<script type="text/javascript" src="js/libs/three/OBJLoader.js"></script>
+	<!--<script type="text/javascript" src="js/libs/three/LoaderUtils.js"></script>
+	<script type="text/javascript" src="js/libs/three/FBXLoader.js"></script>-->
 	<script type="text/javascript"> var mode_debug = false; </script>
 	<script type="text/javascript" src="js/globvar.js"></script>
 	<script type="text/javascript" src="js/cargaModelo.js"></script>
@@ -28,6 +34,7 @@
 	<script type="text/javascript" src="js/autos.js"></script>
 	<script type="text/javascript" src="js/escenario.js"></script>
 	<script type="text/javascript" src="js/objetos.js"></script>
+	<script type="text/javascript" src="js/animation.js"></script>
 	<script type="text/javascript" src="js/graph.js"></script>
 	
 
@@ -98,12 +105,20 @@
 		{
 			cursor:pointer;
 		}
+		.clsGUI_MasterMessage
+		{
+			position:absolute;
+			top:20%;
+			left:45%;
+			z-index:99;
+			color:white;	
+		}
 	</style>
     
 </head>
 <body class="black">
 <?php require_once 'pause.php'; ?>
-
+<div class="clsGUI_MasterMessage"></div>
 
 <div class="clsGUI">
 	<div class="clsGUI_Points z-depth-3">
