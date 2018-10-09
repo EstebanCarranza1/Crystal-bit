@@ -31,7 +31,50 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="col offset-l2 l4 center clsComoJugarPanel" style="min-height:380px; max-height:380px;">
+                    <div class="card horizontal blue hoverable">
+                        <div class="card-stacked">
+                            <div class="card-action white-text">
+                                <h6>Cambia cristales entre jugadores</h6><br>
+                                <img src="media/img/item_change.png" style="width:100%;">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col l4 center clsComoJugarPanel" style="min-height:380px; max-height:380px;">
+                    <div class="card horizontal blue hoverable">
+                        <div class="card-stacked">
+                            <div class="card-action white-text">
+                                <h6>Increnta la velocidad del jugador</h6><br>
+                                <img src="media/img/item_speed.png" style="width:100%;">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col offset-l2 l4 center clsComoJugarPanel" style="min-height:380px; max-height:380px;">
+                    <div class="card horizontal blue hoverable">
+                        <div class="card-stacked">
+                            <div class="card-action white-text">
+                                <h6>Evita que el otro jugador se mueva</h6><br>
+                                <img src="media/img/item_movent.png" style="width:100%;">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col l4 center clsComoJugarPanel" style="min-height:380px; max-height:380px;">
+                    <div class="card horizontal blue hoverable">
+                        <div class="card-stacked">
+                            <div class="card-action white-text">
+                                <h6>No toques las rocas, podrías realentizarte</h6><br>
+                                <img src="media/img/obstaculo.png" style="width:100%;">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
               
 <!-- </PANEL COMO JUGAR> ----------------------------------------------------------------------------------- -->

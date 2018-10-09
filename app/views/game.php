@@ -132,6 +132,13 @@
 		<label class="clsGUI_Points_text"  id="lblPlayer_01">
 			&nbsp; AAAAAAA
 		</label>
+		<label class="clsGUI_Points_text"  id="lblVelocity_01">
+			&nbsp; Velocidad : 10
+		</label>
+		<label class="clsGUI_Points_text"  id="lblEstado_01">
+			&nbsp; Normal
+			<!--<progress value="4" max="4" width="300px" id="lblEstado_01_barra"></progress>-->
+		</label>
 	</div>
 
 	<div class="clsGUI_Points clsGUI_RIGHT z-depth-3">
@@ -144,6 +151,13 @@
 		</label>
 		<label class="clsGUI_Points_text clsGUI_RIGHT" id="lblPlayer_02">
 			&nbsp; BBBBBBB
+		</label>
+		<label class="clsGUI_Points_text"  id="lblVelocity_02">
+			&nbsp; Velocidad : 10
+		</label>
+		<label class="clsGUI_Points_text"  id="lblEstado_02">
+			&nbsp; Normal
+			<!--<progress value="4" max="4" width="300px" id="lblEstado_02_barra"></progress> -->
 		</label>
 	</div>
 	<div class="clsGUI_Points clsGUI_Central  z-depth-3">

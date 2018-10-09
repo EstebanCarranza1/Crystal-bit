@@ -16,9 +16,9 @@
 	
 	function connect() {
 		$databasehost = "localhost";
-		$databasename = "db_cristal_bit";
-		$databaseuser = "root";
-		$databasepass = "root";
+		$databasename = "db_esteban";
+		$databaseuser = "db_esteban";
+		$databasepass = "db_esteban";
 
 		$mysqli = new mysqli($databasehost, $databaseuser, $databasepass, $databasename);
 		if ($mysqli->connect_errno) {

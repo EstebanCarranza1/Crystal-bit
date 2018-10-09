@@ -31,6 +31,10 @@ function setTotalCristalesGUI() {
     
 }
 
+function updateGUI()
+{
+    setTotalCristalesGUI();
+}
 function crear_obstaculos() {
     
  
@@ -164,6 +168,24 @@ function validar_colision(idPlayer) {
             colision_items[0].object.parent.position.set(getRandomPos(60, 0, 0), 0, getRandomPos(50, 0));
         
             $(".clsGUI_MasterMessage").append( "Obtenido [" + colision_items[0].object.parent.name + "] <br>");
+            if (colision_items[0].object.parent.name === "item_change")
+            {
+                var aux_cristal = 0;
+                aux_cristal = player[0].puntuacion;
+                player[0].puntuacion = player[1].puntuacion;
+                player[1].puntuacion = aux_cristal;
+            }
+            if(colision_items[0].object.parent.name === "item_movent")
+            {
+                if(idPlayer == 0)
+                    player[1].move = false;
+                if (idPlayer == 1)
+                    player[0].move = false;
+            } 
+            if (colision_items[0].object.parent.name === "item_speed")
+            {
+                player[idPlayer].control.velocity+=5;
+            }
 
         }
 
@@ -205,12 +227,15 @@ function crear_cubo_principal() {
         player[i].rotation.y = player[i].initialPos.rotation.y;
         player[i].rotation.z = player[i].initialPos.rotation.z;
 
+        player[i].iVelocity = 10;
+        player[i].iRot = 0.25;
         player[i].puntuacion = 0;
+        player[i].move = true;
 
     }
-
-    player[0].control = new controller(0, 0, 30, 0.25, "A", "W", "S", "D");
-    player[1].control = new controller(0, 0, 30, 0.25, "%", "&", "(", "'");
+    //new controller (yaw, forward, velocity, rot, btnLeft, btnUp, btnDown, btnRight);
+    player[0].control = new controller(0, 0, player[0].iVelocity, player[0].iRot, "A", "W", "S", "D");
+    player[1].control = new controller(0, 0, player[1].iVelocity, player[1].iRot, "%", "&", "(", "'");
 
 }
 var P_idAudioControl;
@@ -309,6 +334,8 @@ var spawnTimeChange = 0;
 var spawnTimeSpeed = 0;
 var spawnTimeMovent = 0;
 var showMasterMessage = 0;
+var moventTime = 0;
+var moventTimeMax = 4;
 function render() {
    
     if(!endgame)
@@ -317,6 +344,8 @@ function render() {
         deltaTime = clock.getDelta();
 
     }
+    updateGUI();
+
     /*
     var master_items_render = scene.getObjectByName("master_items");
     var item_change = scene.getObjectByName("master_items").children[0];
@@ -325,7 +354,30 @@ function render() {
 
     //itemX2.position.y = 4;
     //scene.add(itemX2);
-    
+    for(var i = 0; i< 2;i++)
+    {
+        if(!player[i].move)
+        {
+            if(moventTime < moventTimeMax)
+            {
+                player[i].control.velocity = 0;
+                moventTime+= deltaTime;  
+                $("#lblEstado_0"+ (i+1)).html("&nbsp; Bloqueado");             
+               // $("#lblEstado_0"+(i+1)+"_barra").attr('value', 4-moventTime);
+            }
+            else
+            {
+                moventTime = 0; 
+                player[i].control.velocity = player[i].iVelocity;
+                player[i].move = true;
+                ///$("#lblEstado_01_barra").attr('value',4);
+                $("#lblEstado_0" + (i + 1)).html("&nbsp; Bloqueado");
+            }
+                
+        }
+        $("#lblVelocity_0" + (i+1)).html("&nbsp; Velocidad: " + player[i].control.velocity);
+        
+    }
 
     var skydome = scene.getObjectByName("skydome");
     if (skydome != null) {
