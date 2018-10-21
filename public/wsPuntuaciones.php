@@ -50,7 +50,9 @@
 			while( $r = $result->fetch_assoc()) {
 				$rows[] = $r;
 			}			
+			
 			// Codificamos los resultados a formato JSON y lo enviamos al HTML (Client-Side)
+			
 			echo json_encode($rows);
 		}
 		mysqli_close($mysqli);
@@ -70,6 +72,7 @@
 				$rows[] = $r;
 			}			
 			// Codificamos los resultados a formato JSON y lo enviamos al HTML (Client-Side)
+			
 			echo json_encode($rows);
 		}
 		mysqli_close($mysqli);		
@@ -91,6 +94,7 @@
 				$rows[] = $r;
 			}			
 			// Codificamos los resultados a formato JSON y lo enviamos al HTML (Client-Side)
+			
 			echo json_encode($rows);
 		}
 		mysqli_close($mysqli);		
