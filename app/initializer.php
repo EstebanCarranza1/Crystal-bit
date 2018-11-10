@@ -3,6 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta property="og:url"           content="http://games.twicky.com.mx/crystal-bit/" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Crystal Bit" />
+  <meta property="og:description"   content="Un nuevo juego para navegador cuyo objetivo es obtener más cristales que tu rival, además de recoger cristales también podrán recoger algunos items que harán el juego más divertido y entretenido." />
+  <meta property="og:image"         content="http://games.twicky.com.mx/wp-content/uploads/2018/10/menu.png" />
+
     <title>Cristal bit</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Import Google Icon Font-->
@@ -31,6 +38,7 @@
                 <div class="col s12">
                     <img width="100%" src="media/img/banner_02.png">
                 </div>
+                
                 <br>
 
                  <div class="col s12 m6 offset-m3 l8 offset-l2 center clsIniciarJuego">
@@ -84,13 +92,16 @@
                 </div>
 
                
-               
+               <div class="col s12 center">
+                    <?php include 'views/facebook.php'; ?>
+                </div>
 
 
 
             </div>
         </div>
     </div>
+    
     <div id="particles-js"></div>
 
 
