@@ -12,8 +12,8 @@ newmtl montania_mat
 	Kd 0.8000 0.8000 0.8000
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka montania.png
-	map_Kd montania.png
+	map_Ka montania.jpg
+	map_Kd montania.jpg
 
 newmtl calle_cerca1
 	Ns 0.0000

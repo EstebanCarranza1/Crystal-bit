@@ -12,10 +12,12 @@ var player = [];
 var total_players = 2;
 var cristales = [];
 var obstaculos = [];
+var limites = [];
 var pause = false;
 //Considerar darle la libertad al jugador de elegir el numero
 var total_cristales = 50;
 var total_obstaculos = 50;
+var total_limites = 4;
 var _PAUSE_GAME = false;
 
 //var cristal_model;
@@ -45,16 +47,47 @@ function crear_obstaculos() {
                 color: new THREE.Color(0, 0, 1), opacity: 0.0, transparent: true
         }
         );
-
+    
     var obstaculo = new THREE.Mesh(geometry, material);
+    if (console_out) console.log("crear_obstaculos - MasterOBJ (var obstaculo)");
     for (var i = 0; i < total_obstaculos; i++) {
         obstaculo.name = "obstaculo-" + i;
         obstaculos.push(obstaculo.clone());
         scene.add(obstaculos[i]);
+        if (console_out) console.log("crear_obstaculos - (obstaculos["+i+"]/"+total_obstaculos+")");
     }
   
 }
+function crear_limites()
+{
+    var geometry = new THREE.BoxGeometry(1,2,1);
+    var material = new THREE.MeshLambertMaterial
+        (
+        {
+            color: new THREE.Color(0, 1, 0), opacity: 0.0, transparent: true
 
+        }
+        );
+    var limite = new THREE.Mesh(geometry, material);
+    for (var i = 0; i < total_cristales; i++) {
+        limite.name = "limite-" + i;
+        limites.push(limite.clone());
+        scene.add(limites[i]);
+    }
+    var height = 90;
+    //arriba
+    limites[0].position.set(0,0,-45);
+    limites[0].scale.x = height;
+    //derecha
+    limites[1].position.set(45,0,0);
+    limites[1].scale.z = height;
+    //abajo
+    limites[2].position.set(0,0,32);
+    limites[2].scale.x = height;
+    ///izquierda
+    limites[3].position.set(-45,0,0);
+    limites[3].scale.z = height;
+}
 function crear_cristales() {
     var geometry = new THREE.SphereGeometry(1, 32, 32);
     var material = new THREE.MeshLambertMaterial
@@ -64,7 +97,7 @@ function crear_cristales() {
             
         }
         );
-
+    
     var cristal = new THREE.Mesh(geometry, material);
     for (var i = 0; i < total_cristales; i++) {
         cristal.name = "cristal-" + i;
@@ -112,13 +145,14 @@ function crear_rayos_para_objeto() {
 var colision_cristales;
 var colision_obstaculos;
 var colision_items;
+var colision_limites;
 function validar_colision(idPlayer) {
     for (var i = 0; i < player[idPlayer].rayos.length; i++) {
         raycaster[idPlayer].set(player[idPlayer].position, player[idPlayer].rayos[i]);
         colision_cristales = raycaster[idPlayer].intersectObjects(cristales, false);
         colision_obstaculos = raycaster[idPlayer].intersectObjects(obstaculos, false);
         colision_items = raycaster[idPlayer].intersectObjects(master_items, true);
-
+        colision_limites = raycaster[idPlayer].intersectObjects(limites, true);
         if (colision_cristales.length > 0 && colision_cristales[0].distance < 2) {
             console.log("colision_cristales");
 
@@ -165,7 +199,7 @@ function validar_colision(idPlayer) {
 
             console.log("colision_items " + colision_items[0].object.parent.name);
 
-            colision_items[0].object.parent.position.set(getRandomPos(60, 0, 0), 0, getRandomPos(50, 0));
+            colision_items[0].object.parent.position.set(getRandomPos(60, 0, 0), master_items[0].position.y, getRandomPos(50, 0));
         
             $(".clsGUI_MasterMessage").append( "Obtenido [" + colision_items[0].object.parent.name + "] <br>");
             if (colision_items[0].object.parent.name === "item_change")
@@ -188,16 +222,25 @@ function validar_colision(idPlayer) {
             }
 
         }
+        if (colision_limites.length > 0 && colision_limites[0].distance < 1) {
+            var rebote = 2;
+            if (player[idPlayer].control.forward > 0)
+                player[idPlayer].control.forward = (-player[idPlayer].control.velocity) * rebote;
+            else
+                player[idPlayer].control.forward = (player[idPlayer].control.velocity) * rebote;
+        }
 
     }
 }
 function crear_cubo_principal() {
     var material = new THREE.MeshLambertMaterial({ color: new THREE.Color(0.5, 0.0, 0.0), opacity: 0.0, transparent: true });
     var geometry = new THREE.BoxGeometry(1, 1, 1);
-    player[0] = new THREE.Mesh(geometry, material)
+    player[0] = new THREE.Mesh(geometry, material);
+    if(console_out) console.log("player[0] BOX - created");
     //player[0].position.y = 0;
 
     player[1] = player[0].clone();
+    if (console_out) console.log("player[1] BOX.clone() - created");
 
     //Creando coordenada inicial
     player[0].initialPos =
@@ -205,7 +248,7 @@ function crear_cubo_principal() {
             position: new THREE.Vector3(-35, 0, -26),
             rotation: new THREE.Vector3(0, 29.2, 0)
         };
-
+    if (console_out) console.log("player[0] - initialPos");
     //position : new THREE.Vector3(-35,0,-26);
     //position : new THREE.Vector3(26,0,17);
 
@@ -214,7 +257,7 @@ function crear_cubo_principal() {
             position: new THREE.Vector3(35, 0, 26),
             rotation: new THREE.Vector3(0, 0.6, 0)
         };
-
+    if (console_out) console.log("player[1] - initialPos");
 
 
     for (var i = 0; i < total_players; i++) {
@@ -231,12 +274,13 @@ function crear_cubo_principal() {
         player[i].iRot = 0.25;
         player[i].puntuacion = 0;
         player[i].move = true;
-
+        if (console_out) console.log("player["+i+"] - position, rotation and data");
     }
     //new controller (yaw, forward, velocity, rot, btnLeft, btnUp, btnDown, btnRight);
     player[0].control = new controller(0, 0, player[0].iVelocity, player[0].iRot, "A", "W", "S", "D");
+    if (console_out) console.log("player[0] - controller asign");
     player[1].control = new controller(0, 0, player[1].iVelocity, player[1].iRot, "%", "&", "(", "'");
-
+    if (console_out) console.log("player[1] - controller asign");
 }
 var P_idAudioControl;
 function activar_menu_pause(activar, idAudioControl) {
@@ -264,18 +308,42 @@ function activar_menu_pause(activar, idAudioControl) {
 }
 
 $(document).ready(function () {
+    
     crear_cubo_principal();
+    if (console_out) console.log("crear_cubo_principal() - OK");
     setupScene();
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
+    
+   
+
     crear_cristales();
+    if (console_out) console.log("crear_cristales() - OK");
+    
     crear_obstaculos();
+    if (console_out) console.log("crear_obstaculos() - OK");
+    
     posicionar_cristales();
+    if (console_out) console.log("posicionar_cristales() - OK");
+    
     posicionar_obstaculos();
+    if (console_out) console.log("posicionar_obstaculos() - OK");
+    
     crear_rayos_para_objeto();
+    if (console_out) console.log("crear_rayos_para_objeto() - OK");
+    
     cargar_escenario();
+    if (console_out) console.log("cargar_escenario() - OK");
+    
     cargar_items_y_obstaculos();
+    if (console_out) console.log("cargar_items_y_obstaculos() - OK");
+    
     cargar_animaciones();
+    if (console_out) console.log("cargar_animaciones() - OK");
+
+    crear_limites();
+    if (console_out) console.log("crear_limites() - OK");
+
     render();
 });
 
@@ -336,6 +404,10 @@ var spawnTimeMovent = 0;
 var showMasterMessage = 0;
 var moventTime = 0;
 var moventTimeMax = 4;
+var topDirectionalLight = false;
+var maxDirectionalLight = 1;
+var minDirectionalLight = 0;
+var incDirectionalLight = 0.001;
 function render() {
    
     if(!endgame)
@@ -371,7 +443,7 @@ function render() {
                 player[i].control.velocity = player[i].iVelocity;
                 player[i].move = true;
                 ///$("#lblEstado_01_barra").attr('value',4);
-                $("#lblEstado_0" + (i + 1)).html("&nbsp; Bloqueado");
+                $("#lblEstado_0" + (i + 1)).html("&nbsp; Normal");
             }
                 
         }
@@ -384,19 +456,52 @@ function render() {
         skydome.rotation.x += 0.001;
         skydome.rotation.y += 0.001;
     }
+    
+    
     var item_change = scene.getObjectByName("item_change");
     if(item_change != null)
     {
         (item_change.rotation.y < 360) ? item_change.rotation.y += 0.1 : item_change.rotation.y = 0;
         if(spawnTimeChange > 5)
         {
+            
             //item_change.position.set(getRandomPos(60, 0, 0), 5, getRandomPos(50, 0));
-            item_change.position.set(getRandomPos(60, 0, 0), 0, getRandomPos(50, 0));
+            item_change.position.set(getRandomPos(60, 0, 0), item_change.position.y, getRandomPos(50, 0));
             spawnTimeChange = 0;
         }
         
     }
-    
+    var directionalLight = scene.getObjectByName("directionalLight_0");
+    //debugger;
+    if (directionalLight != undefined)
+    {
+        //intensity
+        if (directionalLight.intensity <= maxDirectionalLight && !topDirectionalLight) 
+            directionalLight.intensity += (incDirectionalLight);
+        else 
+        { 
+            topDirectionalLight = true;
+            if (directionalLight.intensity >= minDirectionalLight )
+                directionalLight.intensity -= (incDirectionalLight);
+            else topDirectionalLight = false;
+        }
+        if (directionalLight.intensity >= 0.8 && directionalLight.intensity <= 1.0) {
+            directionalLight.color.r = 0.5;
+            directionalLight.color.g = 0.5;
+            directionalLight.color.b = 0.5;
+        } else if (directionalLight.intensity >= 0.4 && directionalLight.intensity <= 0.7) {
+            directionalLight.color.r = 1;
+            directionalLight.color.g = 0.2705882352941176;
+            directionalLight.color.b = 0;
+        }else if(directionalLight.intensity >= 0 && directionalLight.intensity <= 0.3)
+        {
+            directionalLight.color.r = 0.0;
+            directionalLight.color.g = 0.0;
+            directionalLight.color.b = 0.0;
+        }
+        
+    }
+    //debugger;
     spawnTimeChange+=deltaTime;
 
     var item_movent = scene.getObjectByName("item_movent");
@@ -404,8 +509,9 @@ function render() {
     {
         (item_movent.rotation.y < 360) ? item_movent.rotation.y += 0.1 : item_movent.rotation.y = 0;
         if (spawnTimeMovent > 5) {
+           
             //item_movent.position.set(getRandomPos(60, 0, 0), 5, getRandomPos(50, 0));
-            item_movent.position.set(getRandomPos(60, 0, 0),0, getRandomPos(50, 0));
+            item_movent.position.set(getRandomPos(60, 0, 0), item_movent.position.y, getRandomPos(50, 0));
             spawnTimeMovent = 0;
         }
     }
@@ -416,7 +522,7 @@ function render() {
         (item_speed.rotation.y < 360) ? item_speed.rotation.y += 0.1 : item_speed.rotation.y = 0;
         if (spawnTimeSpeed > 5) {
            // item_speed.position.set(getRandomPos(60, 0, 0), 5, getRandomPos(50, 0));
-            item_speed.position.set(getRandomPos(60, 0, 0), 0, getRandomPos(50, 0));
+            item_speed.position.set(getRandomPos(60, 0, 0), item_speed.position.y, getRandomPos(50, 0));
             spawnTimeSpeed = 0;
         }
     }
@@ -537,12 +643,20 @@ function setupScene() {
     renderer.setSize(visibleSize.width, visibleSize.height);
 
     var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1.0);
+    ambientLight.name = "ambientLight_0";
     scene.add(ambientLight);
+    if (console_out) console.log("AmbientLight - OK");
 
-    var directionalLight = new THREE.DirectionalLight(new THREE.Color(1, 1, 0), 0.4);
+    var directionalLight = new THREE.DirectionalLight(new THREE.Color(1, 1, 1), 0.4);
     directionalLight.position.set(0, 0, 1);
+    directionalLight.name = "directionalLight_0";
     scene.add(directionalLight);
+    if (console_out) console.log("DirectionalLight - OK");
 
+    var pointLight = new THREE.PointLight(new THREE.Color(1,1,1), 1, 100);
+    pointLight.name= "pointLight_0";
+    scene.add(pointLight);
+    if (console_out) console.log("PointLight - OK");
     var grid = new THREE.GridHelper(50, 10, 0xffffff, 0xffffff);
     grid.position.y = -1;
     scene.add(grid);
@@ -550,6 +664,7 @@ function setupScene() {
 
     for (var i = 0; i < total_players; i++)
         scene.add(player[i]);
+    if (console_out) console.log("scene.add(player["+i+"]/"+total_players+") - OK");
 
     // camara 3era persona (anclar la camara al cubo)
     /*

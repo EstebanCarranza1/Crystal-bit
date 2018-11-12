@@ -30,6 +30,7 @@
 	<!--<script type="text/javascript" src="js/libs/three/LoaderUtils.js"></script>
 	<script type="text/javascript" src="js/libs/three/FBXLoader.js"></script>-->
 	<script type="text/javascript"> var mode_debug = false; </script>
+	<script type="text/javascript" src="js/models/transform.js"></script>
 	<script type="text/javascript" src="js/globvar.js"></script>
 	<script type="text/javascript" src="js/cargaModelo.js"></script>
 	<script type="text/javascript" src="js/cristales.js"></script>
@@ -202,7 +203,7 @@
     
 
 
-	<script src="js/musica.js"></script>
+	<!--<script src="js/musica.js"></script>-->
 	<script src="js/player.js"></script>
     <script>
       $(document).ready(function(){
