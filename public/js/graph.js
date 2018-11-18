@@ -15,8 +15,8 @@ var obstaculos = [];
 var limites = [];
 var pause = false;
 //Considerar darle la libertad al jugador de elegir el numero
-var total_cristales = 50;
-var total_obstaculos = 50;
+var total_cristales = 20;
+var total_obstaculos = 20;
 var total_limites = 4;
 var _PAUSE_GAME = false;
 
