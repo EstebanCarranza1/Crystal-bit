@@ -306,6 +306,46 @@ function activar_menu_pause(activar, idAudioControl) {
     }
 
 }
+var pajaros = [];
+function crear_varios_pajaros()
+{
+    /*
+    pajaros[0] = new THREE.Object3D();
+    loadOBJWithMTL("media/assets/ave/", "ave_0" + ".obj", "ave_0" + ".mtl", (object) => {
+        object.scale.set(0.1, 0.1, 0.1);
+        object.rotation.y = THREE.Math.degToRad(90);
+        object.position.set(0, 0, 0);
+        object.scale.set(0.1, 0.1, 0.1);
+        object.visible = true;
+        object.name = "ave_0";
+        pajaros[0].add(object);
+    });
+    loadOBJWithMTL("media/assets/ave/", "ave_1" + ".obj", "ave_1" + ".mtl", (object) => {
+        object.scale.set(0.1, 0.1, 0.1);
+        object.rotation.y = THREE.Math.degToRad(90);
+        object.position.set(0, 0, 0);
+        
+        object.visible = true;
+        object.name = "ave_1";
+        pajaros[0].add(object);
+
+    });
+    loadOBJWithMTL("media/assets/ave/", "ave_2" + ".obj", "ave_2" + ".mtl", (object) => {
+        object.scale.set(0.1, 0.1, 0.1);
+        object.rotation.y = THREE.Math.degToRad(90);
+        object.position.set(0, 0, 0);
+        
+        object.visible = true;
+        object.name = "ave_2";
+        pajaros[0].add(object);
+    });
+    pajaros[0].scale.set(10,10,10);
+    pajaros[1] = pajaros[0].clone();
+    pajaros[1].position.x = 50;
+    scene.add(pajaros[0]);
+    scene.add(pajaros[1]);
+    */
+}
 function crear_pajaro()
 {
     loadOBJWithMTL("media/assets/ave/", "ave_0" + ".obj", "ave_0" + ".mtl", (object) => {
@@ -377,6 +417,8 @@ $(document).ready(function () {
 
     crear_pajaro();
     if (console_out) console.log("crear_pajaro() - OK");
+
+    crear_varios_pajaros();
     render();
 });
 

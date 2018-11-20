@@ -1,0 +1,82 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 20.11.2018 01:22:00
+
+newmtl _escenario_03escenario_01_02_montania_mat
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5800 0.5800 0.5800
+	Kd 0.5800 0.5800 0.5800
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka montania.jpg
+	map_Kd montania.jpg
+
+newmtl _escenario_03escenario_01_02_calle_cerca1
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5800 0.5800 0.5800
+	Kd 0.5800 0.5800 0.5800
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka concreto.jpg
+	map_Kd concreto.jpg
+
+newmtl _escenario_03escenario_01_02_calle_lambert2SG1
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5800 0.5800 0.5800
+	Kd 0.5800 0.5800 0.5800
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka asfalto_black.jpg
+	map_Kd asfalto_black.jpg
+
+newmtl _escenario_03escenario_01_02_Tree_lambert2SG1
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5800 0.5800 0.5800
+	Kd 0.5800 0.5800 0.5800
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka hojas.jpg
+	map_Kd hojas.jpg
+
+newmtl _escenario_03escenario_01_02_Tree_lambert3SG1
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.1100 0.0300 0.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl _escenario_03lowpolytree_lambert1SG
+	Ns 30.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5800 0.5800 0.5800
+	Kd 0.0000 -0.0200 -0.0300
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 -0.0000 -0.0000
