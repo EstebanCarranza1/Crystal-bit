@@ -67,7 +67,18 @@
 	var raycaster;
 	var isWorldReady = [ false, false ];
 
-		var aveAnim = [];
+	var aves = [];
+	var aveAnim = 
+	{ 
+		objectMain: new THREE.Object3D(),
+		animOBJ: {
+			ini: 0,
+			frames: 2,
+			con: 0,
+			vel: 20,
+			inc: 0,
+		}
+	};
 	$(document).ready(function() {
 
 		setupScene();
@@ -134,29 +145,30 @@
 		});
 
 	//debugger;
-	
+		scene.add(aveAnim.objectMain);
 		loadOBJWithMTL("assets/ave/", "ave_0" + ".obj", "ave_0" + ".mtl", (object) => {
 			object.position.set(0, 1, 0);
 			object.scale.set(0.1, 0.1, 0.1);
-			object.visible = false;
+			object.visible = true;
 			object.name = "ave_0";
-			scene.add(object);
+			aveAnim.objectMain.add(object);
+			//scene.add(aveAnim.objectMain[0]);
 			
 		});
 		loadOBJWithMTL("assets/ave/", "ave_1" + ".obj", "ave_1" + ".mtl", (object) => {
 			object.position.set(0, 1, 0);
 			object.scale.set(0.1, 0.1, 0.1);
-			object.visible = false;
+			object.visible = true;
 			object.name = "ave_1";
-			scene.add(object);
+			aveAnim.objectMain.add(object);
 			
 		});
 		loadOBJWithMTL("assets/ave/", "ave_2" + ".obj", "ave_2" + ".mtl", (object) => {
 			object.position.set(0, 1, 0);
 			object.scale.set(0.1, 0.1, 0.1);
-			object.visible = false;
+			object.visible = true;
 			object.name = "ave_2";
-			scene.add(object);
+			aveAnim.objectMain.add(object);
 		});
 
 		//animationFBX();
@@ -193,37 +205,28 @@
 
 
 	//var colorCube = new THREE.Vector4(0.5, 0.5, 0.5, 0.5);
-	var animOBJ = {
-		ini: 0,
-		fin: 2,
-		con: 0,
-		vel: 20,
-		inc: 0
-	};
 	
-function ecObjAnim()
+	
+function ecObjAnim(dTime)
 {
-	if (animOBJ.inc < 1) {
-		animOBJ.inc += deltaTime * animOBJ.vel;
+	if (aveAnim.animOBJ.inc < 1) {
+		aveAnim.animOBJ.inc += dTime * aveAnim.animOBJ.vel;
 	}
 	else {
-		animOBJ.inc = 0;
-		if (animOBJ.con < animOBJ.fin) animOBJ.con++; else animOBJ.con = 0;
+		aveAnim.animOBJ.inc = 0;
+		if (aveAnim.animOBJ.con < aveAnim.animOBJ.frames) aveAnim.animOBJ.con++; else aveAnim.animOBJ.con = 0;
 		if (
-			scene.getObjectByName("ave_0") != undefined ||
-			scene.getObjectByName("ave_1") != undefined ||
-			scene.getObjectByName("ave_2") != undefined
+			aveAnim != undefined
 		) {
-			for (var i = 0; i < animOBJ.fin + 1; i++)
-				scene.getObjectByName("ave_" + i).visible = false;
+			for (var i = 0; i < aveAnim.animOBJ.frames+1; i++)
+				aveAnim.objectMain.children[i].visible = false;
 
-			scene.getObjectByName("ave_" + animOBJ.con).visible = true;
-
-			scene.getObjectByName("ave_0").position.y = 5;
-			scene.getObjectByName("ave_1").position.y = 5;
-			scene.getObjectByName("ave_2").position.y = 5;
+			aveAnim.objectMain.children[aveAnim.animOBJ.con].visible = true;
+			aveAnim.objectMain.position.set(0, 5, 0);
+			
 		}
 	}			
+	
 }
 
 		
@@ -233,7 +236,7 @@ function ecObjAnim()
 		
 		
 		deltaTime = clock.getDelta();
-		ecObjAnim();
+		ecObjAnim(deltaTime);
 		
 		
 			
