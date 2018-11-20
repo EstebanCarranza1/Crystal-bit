@@ -15,7 +15,7 @@ var obstaculos = [];
 var limites = [];
 var pause = false;
 //Considerar darle la libertad al jugador de elegir el numero
-var total_cristales = 20;
+var total_cristales = 10;
 var total_obstaculos = 20;
 var total_limites = 4;
 var _PAUSE_GAME = false;
@@ -312,6 +312,7 @@ $(document).ready(function () {
     crear_cubo_principal();
     if (console_out) console.log("crear_cubo_principal() - OK");
     setupScene();
+    setupShaders();
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
     

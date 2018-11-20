@@ -38,8 +38,29 @@
 	<script type="text/javascript" src="js/escenario.js"></script>
 	<script type="text/javascript" src="js/objetos.js"></script>
 	<script type="text/javascript" src="js/animation.js"></script>
+	<script type="text/javascript" src="js/libs/gl-matrix.js"></script>
+	<script type="text/javascript" src="js/libs/shader-utility.js"></script>
+	<script id="shader-vs" type="x-shader/x-vertex">
+	    uniform vec4 color_dark;
+	    varying vec4 col;
+	    void main(void)
+			{
+	        col = color_dark;
+				//se multiplican las matrices para obtener la posicion final del vertice
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+			}
+		</script>
+	<script id="shader-fs" type="x-shader/x-fragment">
+	        varying vec4 col;
+			void main(void)
+			{
+	            //todos los fragmentos serán de color blanco
+				gl_FragColor = col;
+			}
+	</script>
+	<script type="text/javascript" src="js/shaders.js"></script>
 	<script type="text/javascript" src="js/graph.js"></script>
-	
+
 
 
 	<style>

@@ -8,8 +8,8 @@
 	<script type="text/javascript" src="js/libs/three/OBJLoader.js"></script>
 	<script type="text/javascript" src="js/libs/gl-matrix.js"></script>
 	<script type="text/javascript" src="js/libs/shader-utility.js"></script>
-
-
+	
+<script src="js/FBXLoader.js"></script>
 	<script id="shader-vs" type="x-shader/x-vertex">
 	    uniform vec4 color_dark;
 	    varying vec4 col;
@@ -67,7 +67,7 @@
 	var raycaster;
 	var isWorldReady = [ false, false ];
 
-	
+		var aveAnim = [];
 	$(document).ready(function() {
 
 		setupScene();
@@ -133,6 +133,34 @@
 			isWorldReady[1] = true;
 		});
 
+	//debugger;
+	
+		loadOBJWithMTL("assets/ave/", "ave_0" + ".obj", "ave_0" + ".mtl", (object) => {
+			object.position.set(0, 1, 0);
+			object.scale.set(0.1, 0.1, 0.1);
+			object.visible = false;
+			object.name = "ave_0";
+			scene.add(object);
+			
+		});
+		loadOBJWithMTL("assets/ave/", "ave_1" + ".obj", "ave_1" + ".mtl", (object) => {
+			object.position.set(0, 1, 0);
+			object.scale.set(0.1, 0.1, 0.1);
+			object.visible = false;
+			object.name = "ave_1";
+			scene.add(object);
+			
+		});
+		loadOBJWithMTL("assets/ave/", "ave_2" + ".obj", "ave_2" + ".mtl", (object) => {
+			object.position.set(0, 1, 0);
+			object.scale.set(0.1, 0.1, 0.1);
+			object.visible = false;
+			object.name = "ave_2";
+			scene.add(object);
+		});
+
+		//animationFBX();
+
 		render();
 
 		document.addEventListener('keydown', onKeyDown);
@@ -152,6 +180,8 @@
 			});
 
 		});
+
+
 	}
 
 	function onKeyDown(event) {
@@ -161,18 +191,52 @@
 		keys[String.fromCharCode(event.keyCode)] = false;
 	}
 
-	
 
 	//var colorCube = new THREE.Vector4(0.5, 0.5, 0.5, 0.5);
+	var animOBJ = {
+		ini: 0,
+		fin: 2,
+		con: 0,
+		vel: 20,
+		inc: 0
+	};
+	
+function ecObjAnim()
+{
+	if (animOBJ.inc < 1) {
+		animOBJ.inc += deltaTime * animOBJ.vel;
+	}
+	else {
+		animOBJ.inc = 0;
+		if (animOBJ.con < animOBJ.fin) animOBJ.con++; else animOBJ.con = 0;
+		if (
+			scene.getObjectByName("ave_0") != undefined ||
+			scene.getObjectByName("ave_1") != undefined ||
+			scene.getObjectByName("ave_2") != undefined
+		) {
+			for (var i = 0; i < animOBJ.fin + 1; i++)
+				scene.getObjectByName("ave_" + i).visible = false;
+
+			scene.getObjectByName("ave_" + animOBJ.con).visible = true;
+
+			scene.getObjectByName("ave_0").position.y = 5;
+			scene.getObjectByName("ave_1").position.y = 5;
+			scene.getObjectByName("ave_2").position.y = 5;
+		}
+	}			
+}
+
+		
 	function render() {
 		
 		requestAnimationFrame(render);
 		
-		deltaTime = clock.getDelta();
 		
-
-
-		//shaders[0].uniforms.color_dark.value = colorCube;
+		deltaTime = clock.getDelta();
+		ecObjAnim();
+		
+		
+			
 
 		var yaw = 0;
 		var forward = 0;
