@@ -40,6 +40,14 @@
 	<script type="text/javascript" src="js/animation.js"></script>
 	<script type="text/javascript" src="js/libs/gl-matrix.js"></script>
 	<script type="text/javascript" src="js/libs/shader-utility.js"></script>
+	<script src="js/postprocesing/EffectComposer.js"></script>
+	<script src="js/postprocesing/ShaderPass.js"></script>
+	<script src="js/postprocesing/RenderPass.js"></script>
+	<script src="js/postprocesing/CopyShader.js"></script>
+	<script src="js/postprocesing/SepiaShader.js"></script>
+	<script src="js/postprocesing/DigitalGlitch.js"></script>
+	<script src="js/postprocesing/GlitchPass.js"></script>
+
 	<script id="shader-vs" type="x-shader/x-vertex">
 	    uniform vec4 color_dark;
 	    varying vec4 col;

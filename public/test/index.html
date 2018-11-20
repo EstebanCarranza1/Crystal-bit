@@ -8,8 +8,16 @@
 	<script type="text/javascript" src="js/libs/three/OBJLoader.js"></script>
 	<script type="text/javascript" src="js/libs/gl-matrix.js"></script>
 	<script type="text/javascript" src="js/libs/shader-utility.js"></script>
-	
-<script src="js/FBXLoader.js"></script>
+<!-- <script src="js/three.js"></script>-->
+	<script src="js/EffectComposer.js"></script>
+	<script src="js/ShaderPass.js"></script>
+	<script src="js/RenderPass.js"></script>
+	<script src="js/CopyShader.js"></script>
+
+	<script src="js/SepiaShader.js"></script>
+	<script src="js/DigitalGlitch.js"></script>
+	<script src="js/GlitchPass.js"></script>
+
 	<script id="shader-vs" type="x-shader/x-vertex">
 	    uniform vec4 color_dark;
 	    varying vec4 col;
@@ -229,7 +237,8 @@ function ecObjAnim(dTime)
 	if (aveAnim.animMOV.mover > aveAnim.animMOV.maxMov) aveAnim.animMOV.mover = aveAnim.animMOV.minMov;
 }
 
-	
+	var composer;
+	var renderPass;
 	function render() {
 			
 		requestAnimationFrame(render);
@@ -273,8 +282,8 @@ function ecObjAnim(dTime)
 			camera.translateZ(forward * deltaTime);
 		}
 		
-	
-		renderer.render(scene, camera);
+		composer.render();
+		//renderer.render(scene, camera);
 		
 	}
 
@@ -305,8 +314,14 @@ function ecObjAnim(dTime)
 		renderer.domElement.id = "webgl-canvas";
 		$("#scene-section").append(renderer.domElement);
 
-		
-		
+		composer = new THREE.EffectComposer(renderer);
+		renderPass = new THREE.RenderPass(scene, camera);
+		composer.addPass(renderPass);
+		var sepiaPass = new THREE.ShaderPass(THREE.SepiaShader);
+		composer.addPass(sepiaPass);
+		var glitchPass = new THREE.GlitchPass(0);
+		composer.addPass(glitchPass);
+		glitchPass.renderToScreen = true;
 	}
 
 

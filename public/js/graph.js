@@ -507,7 +507,9 @@ function ecObjAnim(dTime) {
     aveAnim.animMOV.mover += dTime;
     if (aveAnim.animMOV.mover > aveAnim.animMOV.maxMov) aveAnim.animMOV.mover = aveAnim.animMOV.minMov;
 }
-
+var composer;
+var renderPass;
+var activar_glitch = false;
 function render() {
    
     if(!endgame)
@@ -724,8 +726,21 @@ function render() {
 
     if(total_cristales == 0)
         finalizar_juego();
+
     
-    renderer.render(scene, camera);
+    if(total_cristales < 5 && !activar_glitch)
+    {
+        activar_glitch=true;
+        renderPass.renderToScreen = false;
+        var glitchPass = new THREE.GlitchPass(0);
+        composer.addPass(glitchPass);
+        glitchPass.renderToScreen = true;
+    }
+        
+    
+    //renderer.render(scene, camera);
+    composer.render();
+   // sepiaComposer.render();
 }
 
 function setupScene() {
@@ -780,4 +795,12 @@ function setupScene() {
     //camera.position.y = 5;
 
     $("#scene-section").append(renderer.domElement);
+
+    composer = new THREE.EffectComposer(renderer);
+    renderPass = new THREE.RenderPass(scene, camera);
+    composer.addPass(renderPass);
+    renderPass.renderToScreen = true;
+
+   
+    
 }
