@@ -1,0 +1,256 @@
+<html>
+<head>
+	
+	<title>Test 01</title>
+	<script type="text/javascript" src="js/libs/jquery/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/libs/three/three.js"></script>
+	<script type="text/javascript" src="js/libs/three/MTLLoader.js"></script>
+	<script type="text/javascript" src="js/libs/three/OBJLoader.js"></script>
+	<script type="text/javascript" src="js/libs/gl-matrix.js"></script>
+	<script type="text/javascript" src="js/libs/shader-utility.js"></script>
+
+
+	<script id="shader-vs" type="x-shader/x-vertex">
+	    uniform vec4 color_dark;
+	    varying vec4 col;
+	    void main(void)
+			{
+	        col = color_dark;
+				//se multiplican las matrices para obtener la posicion final del vertice
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+			}
+		</script>
+	<script id="shader-fs" type="x-shader/x-fragment">
+	        varying vec4 col;
+			void main(void)
+			{
+	            //todos los fragmentos serán de color blanco
+				gl_FragColor = col;
+			}
+	</script>
+	<script id="shader-vs-texture" type="x-shader/x-vertex">
+	 varying vec2 vUv;
+
+    void main() {
+        vUv = uv;
+
+        gl_Position =   projectionMatrix * 
+                        modelViewMatrix * 
+                        vec4(position,1.0);
+    }
+	</script>
+	<script id="shader-fs-texture" type="x-shader/x-fragment">
+	 uniform sampler2D texture1;
+
+    varying vec2 vUv;
+
+    void main() {
+        gl_FragColor = texture2D(texture1, vUv); // Displays Nothing
+        //gl_FragColor = vec4(0.5, 0.2, 1.0, 1.0); // Works; Displays Flat Color
+    }
+	</script>
+	<script type="text/javascript" src="js/shaders.js"></script>
+
+	<script type="text/javascript">
+
+	var scene;
+	var camera;
+	var renderer;
+	var controls;
+	var objects = [];
+	var clock;
+	var deltaTime;	
+	var keys = {};
+	var cajas = [];
+	var maxBox = 8;
+	var objCol = [];
+	var raycaster;
+	var isWorldReady = [ false, false ];
+
+	
+	$(document).ready(function() {
+
+		setupScene();
+		setupShaders();
+		raycaster = new THREE.Raycaster();
+		camera.rayos = [
+			new THREE.Vector3( 1, 0, 0),
+			new THREE.Vector3(-1, 0, 0),
+			new THREE.Vector3( 0, 0, 1),
+			new THREE.Vector3( 0, 0,-1),
+		];
+
+		
+
+
+		loadOBJWithMTL("assets/", "box.obj", "box.mtl", (object) => {
+			//object.position.z = -30;			
+
+			//var box2 = object.clone();
+			//box2.position.x = 30;
+			for(var i = 0; i < maxBox; i++)
+				cajas[i] = object.clone();
+			
+			cajas[0].position.x = -30;
+			cajas[0].position.z = -30;
+			cajas[1].position.x = 0;
+			cajas[1].position.z = -30;
+			cajas[2].position.x = 30;
+			cajas[2].position.z = -30;
+
+			cajas[3].position.x = 50;
+			cajas[3].rotation.y =  THREE.Math.degToRad(-90);
+			cajas[4].position.x = -50;
+			cajas[4].rotation.y =  THREE.Math.degToRad(-90);
+			
+			cajas[5].position.x = -30;
+			cajas[5].position.z = 30;
+			cajas[6].position.x = 0;
+			cajas[6].position.z = 30;
+			cajas[7].position.x = 30;
+			cajas[7].position.z = 30;
+			
+
+			for(var i= 0; i < maxBox; i++)
+			{
+				scene.add(cajas[i]);
+				objCol.push(cajas[i]);
+			}
+
+
+			//scene.add(object);
+			//scene.add(box2);
+			
+
+			isWorldReady[0] = true;
+		});
+
+		loadOBJWithMTL("assets/", "jetski.obj", "jetski.mtl", (object) => {
+			object.position.z = -10;
+			object.rotation.x = THREE.Math.degToRad(-90);
+
+			scene.add(object);
+			isWorldReady[1] = true;
+		});
+
+		render();
+
+		document.addEventListener('keydown', onKeyDown);
+		document.addEventListener('keyup', onKeyUp);		
+	});
+
+	function loadOBJWithMTL(path, objFile, mtlFile, onLoadCallback) {
+		var mtlLoader = new THREE.MTLLoader();
+		mtlLoader.setPath(path);
+		mtlLoader.load(mtlFile, (materials) => {
+			
+			var objLoader = new THREE.OBJLoader();
+			objLoader.setMaterials(materials);
+			objLoader.setPath(path);
+			objLoader.load(objFile, (object) => {
+				onLoadCallback(object);
+			});
+
+		});
+	}
+
+	function onKeyDown(event) {
+		keys[String.fromCharCode(event.keyCode)] = true;
+	}
+	function onKeyUp(event) {
+		keys[String.fromCharCode(event.keyCode)] = false;
+	}
+
+	
+
+	//var colorCube = new THREE.Vector4(0.5, 0.5, 0.5, 0.5);
+	function render() {
+		
+		requestAnimationFrame(render);
+		
+		deltaTime = clock.getDelta();
+		
+
+
+		//shaders[0].uniforms.color_dark.value = colorCube;
+
+		var yaw = 0;
+		var forward = 0;
+		if (keys["A"]) {
+			yaw = 5;
+		} else if (keys["D"]) {
+			yaw = -5;
+		}
+		if (keys["W"]) {
+			forward = -20;
+		} else if (keys["S"]) {
+			forward = 20;
+		}
+
+		if (isWorldReady[0] && isWorldReady[1]) {
+			
+
+			for(var i = 0; i < camera.rayos.length; i++)
+			{
+				var rayo = camera.rayos[i];
+				raycaster.set(camera.position, rayo);
+				//examen
+				var colision = raycaster.intersectObjects(objCol, true);
+
+				if(colision.length > 0 && colision[0].distance < 4)
+				{
+					console.log("esta colisionando");
+					camera.rotation.z += 1;
+				}
+			}
+
+			camera.rotation.y += yaw * deltaTime;
+			camera.translateZ(forward * deltaTime);
+		}
+		
+	
+		renderer.render(scene, camera);
+		
+	}
+
+	function setupScene() {		
+		var visibleSize = { width: window.innerWidth, height: window.innerHeight};
+		clock = new THREE.Clock();		
+		scene = new THREE.Scene();
+		camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 100);
+		camera.position.z = 2;
+		camera.position.y = 5;
+
+		renderer = new THREE.WebGLRenderer( {precision: "mediump" } );
+		renderer.setClearColor(new THREE.Color(0, 0, 0));
+		renderer.setPixelRatio(visibleSize.width / visibleSize.height);
+		renderer.setSize(visibleSize.width, visibleSize.height);
+
+		var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1.0);
+		scene.add(ambientLight);
+
+		var directionalLight = new THREE.DirectionalLight(new THREE.Color(1, 1, 0), 0.4);
+		directionalLight.position.set(0, 0, 1);
+		scene.add(directionalLight);
+
+		var grid = new THREE.GridHelper(50, 10, 0xffffff, 0xffffff);
+		grid.position.y = -1;
+		scene.add(grid);
+
+		renderer.domElement.id = "webgl-canvas";
+		$("#scene-section").append(renderer.domElement);
+
+		
+		
+	}
+
+
+	</script>
+</head>
+
+<body>
+
+	<div id="scene-section"/>
+
+</body>
+</html>
