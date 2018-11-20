@@ -239,8 +239,15 @@
 
 			
 			var players = [];
+			
+			
 			players[0] = new gameplayer(localStorage.getItem("gamename_01"), localStorage.getItem("gamepoints_01"));
 			players[1] = new gameplayer(localStorage.getItem("gamename_02"), localStorage.getItem("gamepoints_02"));
+			
+			var total_cristales =  localStorage.getItem("total_cristales") - players[0].puntuacion - players[1].puntuacion;
+			var total_obstaculos = localStorage.getItem("total_obstaculos");
+			localStorage.setItem("total_cristales", total_cristales);
+			localStorage.setItem("total_obstaculos", total_obstaculos);
 			setTotalCristalesGUI();
 
 			$("#lblPlayer_01").html("&nbsp;&nbsp;" + players[0].nombre);

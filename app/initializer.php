@@ -118,7 +118,7 @@
 
     <script>
         $(document).ready(function(){
-
+            localStorage.clear();
             $('.tabs').tabs();
             $(".indicator").addClass("white");
 

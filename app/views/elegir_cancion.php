@@ -25,13 +25,13 @@
             <div class="card-action white-text">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input value="" id="gamename_01"  type="text" class="validate white-text" required="required">
+                        <input value="" id="gamename_01"  type="text" class="validate white-text center" required="required">
                         <label class="active white-text" for="gamename_01">Jugador 1</label>
                         <br>
                         <img src="media/img/controls_p1.png" style="width:100%;">
                     </div>
                     <div class="input-field col s6">
-                        <input value="" id="gamename_02" type="text" class="validate white-text" required="required">
+                        <input value="" id="gamename_02" type="text" class="validate white-text center" required="required">
                         <label class="active white-text" for="gamename_02">Jugador 2</label>
                         <br>
                         <img src="media/img/controls_p2.png" style="width:100%;">
@@ -91,6 +91,25 @@
         <div class="card-stacked">
             <div class="card-action white-text">
                 <i class="material-icons">fast_forward</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col s12 m6 offset-m3 l8 offset-l2 center clsElegirCancionPanel" id="idEC_CapturarCristales_Obstaculos">
+    <div class="card horizontal blue hoverable">
+        <div class="card-stacked">
+            <div class="card-action white-text">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input value="20" id="total_cristales"  type="text" class="validate white-text center" required="required">
+                        <label class="active white-text" for="total_cristales">Total de cristales</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input value="10" id="total_obstaculos" type="text" class="validate white-text center" required="required">
+                        <label class="active white-text" for="total_obstaculos">Total de obstaculos</label>
+                       
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -197,6 +216,8 @@
             localStorage.setItem("gamename_02", $("#gamename_02").val());
             localStorage.setItem("gamepoints_01", 0);
             localStorage.setItem("gamepoints_02", 0);
+            localStorage.setItem("total_cristales", $("#total_cristales").val());
+            localStorage.setItem("total_obstaculos", $("#total_obstaculos").val());
             
 
             localStorage.setItem("alias",           lista_musica[index].alias);

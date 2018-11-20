@@ -15,8 +15,7 @@ var obstaculos = [];
 var limites = [];
 var pause = false;
 //Considerar darle la libertad al jugador de elegir el numero
-var total_cristales = 10;
-var total_obstaculos = 20;
+
 var total_limites = 4;
 var _PAUSE_GAME = false;
 
@@ -69,7 +68,7 @@ function crear_limites()
         }
         );
     var limite = new THREE.Mesh(geometry, material);
-    for (var i = 0; i < total_cristales; i++) {
+    for (var i = 0; i < 4; i++) {
         limite.name = "limite-" + i;
         limites.push(limite.clone());
         scene.add(limites[i]);
@@ -170,6 +169,7 @@ function validar_colision(idPlayer) {
                         player[idPlayer].puntuacion++;
                         localStorage.setItem("gamepoints_01", player[0].puntuacion);
                         localStorage.setItem("gamepoints_02", player[1].puntuacion);
+                        localStorage.setItem("total_cristales", total_cristales);
                     }
                     setTotalCristalesGUI();
                 }
@@ -306,7 +306,37 @@ function activar_menu_pause(activar, idAudioControl) {
     }
 
 }
+function crear_pajaro()
+{
+    loadOBJWithMTL("media/assets/ave/", "ave_0" + ".obj", "ave_0" + ".mtl", (object) => {
+        object.rotation.y = THREE.Math.degToRad(90);
+        object.position.set(0, 0, 0);
+        object.scale.set(0.1, 0.1, 0.1);
+        object.visible = true;
+        object.name = "ave_0";
+        aveAnim.objectMain.add(object);
+        //scene.add(aveAnim.objectMain[0]);
 
+    });
+    loadOBJWithMTL("media/assets/ave/", "ave_1" + ".obj", "ave_1" + ".mtl", (object) => {
+        object.rotation.y = THREE.Math.degToRad(90);
+        object.position.set(0, 0, 0);
+        object.scale.set(0.1, 0.1, 0.1);
+        object.visible = true;
+        object.name = "ave_1";
+        aveAnim.objectMain.add(object);
+
+    });
+    loadOBJWithMTL("media/assets/ave/", "ave_2" + ".obj", "ave_2" + ".mtl", (object) => {
+        object.rotation.y = THREE.Math.degToRad(90);
+        object.position.set(0, 0, 0);
+        object.scale.set(0.1, 0.1, 0.1);
+        object.visible = true;
+        object.name = "ave_2";
+        aveAnim.objectMain.add(object);
+    });
+    scene.add(aveAnim.objectMain);
+}
 $(document).ready(function () {
     
     crear_cubo_principal();
@@ -345,6 +375,8 @@ $(document).ready(function () {
     crear_limites();
     if (console_out) console.log("crear_limites() - OK");
 
+    crear_pajaro();
+    if (console_out) console.log("crear_pajaro() - OK");
     render();
 });
 
@@ -409,6 +441,31 @@ var topDirectionalLight = false;
 var maxDirectionalLight = 1;
 var minDirectionalLight = 0;
 var incDirectionalLight = 0.001;
+
+function ecObjAnim(dTime) {
+    if (aveAnim.animOBJ.inc < 1) {
+        aveAnim.animOBJ.inc += dTime * aveAnim.animOBJ.vel;
+    }
+    else {
+        aveAnim.animOBJ.inc = 0;
+        if (aveAnim.animOBJ.con < aveAnim.animOBJ.frames) aveAnim.animOBJ.con++; else aveAnim.animOBJ.con = 0;
+        if (
+            aveAnim.objectMain.children.length > 0
+        ) {
+            for (var i = 0; i < aveAnim.animOBJ.frames + 1; i++)
+                aveAnim.objectMain.children[i].visible = false;
+            aveAnim.objectMain.children[aveAnim.animOBJ.con].visible = true;
+        }
+    }
+    aveAnim.objectMain.position.set(
+        Math.sin(aveAnim.animMOV.angulo) + aveAnim.animMOV.mover, 
+        15 + Math.sin(aveAnim.animMOV.angulo), 
+        30 + Math.sin(aveAnim.animMOV.angulo));
+    aveAnim.animMOV.angulo += dTime;
+    aveAnim.animMOV.mover += dTime;
+    if (aveAnim.animMOV.mover > aveAnim.animMOV.maxMov) aveAnim.animMOV.mover = aveAnim.animMOV.minMov;
+}
+
 function render() {
    
     if(!endgame)
@@ -418,6 +475,7 @@ function render() {
 
     }
     updateGUI();
+    ecObjAnim(deltaTime);
 
     /*
     var master_items_render = scene.getObjectByName("master_items");

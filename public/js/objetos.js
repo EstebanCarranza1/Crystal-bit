@@ -126,7 +126,7 @@ function cargar_items_y_obstaculos() {
         object.position.set(0, 0, 0);
         
 
-        for (var i = 0; i < total_obstaculos; i++) {
+        for (var i = 0; i < total_cristales; i++) {
             //object.name = cristal_name + "-" + i;
             cristales[i].add(object.clone());
         }

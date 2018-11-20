@@ -67,18 +67,14 @@
 	var raycaster;
 	var isWorldReady = [ false, false ];
 
-	var aves = [];
+	
 	var aveAnim = 
 	{ 
 		objectMain: new THREE.Object3D(),
-		animOBJ: {
-			ini: 0,
-			frames: 2,
-			con: 0,
-			vel: 20,
-			inc: 0,
-		}
+		animOBJ: { 	ini: 0,	frames: 2,	con: 0,	vel: 20, inc: 0 },
+		animMOV: {angulo: 0, mover: -30, minMov: -30, maxMov: 30}
 	};
+	
 	$(document).ready(function() {
 
 		setupScene();
@@ -145,9 +141,9 @@
 		});
 
 	//debugger;
-		scene.add(aveAnim.objectMain);
+		
 		loadOBJWithMTL("assets/ave/", "ave_0" + ".obj", "ave_0" + ".mtl", (object) => {
-			object.position.set(0, 1, 0);
+			object.position.set(0, 0, 0);
 			object.scale.set(0.1, 0.1, 0.1);
 			object.visible = true;
 			object.name = "ave_0";
@@ -156,7 +152,7 @@
 			
 		});
 		loadOBJWithMTL("assets/ave/", "ave_1" + ".obj", "ave_1" + ".mtl", (object) => {
-			object.position.set(0, 1, 0);
+			object.position.set(0, 0, 0);
 			object.scale.set(0.1, 0.1, 0.1);
 			object.visible = true;
 			object.name = "ave_1";
@@ -164,13 +160,14 @@
 			
 		});
 		loadOBJWithMTL("assets/ave/", "ave_2" + ".obj", "ave_2" + ".mtl", (object) => {
-			object.position.set(0, 1, 0);
+			object.position.set(0, 0, 0);
 			object.scale.set(0.1, 0.1, 0.1);
 			object.visible = true;
 			object.name = "ave_2";
 			aveAnim.objectMain.add(object);
 		});
-
+		scene.add(aveAnim.objectMain);
+		
 		//animationFBX();
 
 		render();
@@ -216,22 +213,25 @@ function ecObjAnim(dTime)
 		aveAnim.animOBJ.inc = 0;
 		if (aveAnim.animOBJ.con < aveAnim.animOBJ.frames) aveAnim.animOBJ.con++; else aveAnim.animOBJ.con = 0;
 		if (
-			aveAnim != undefined
+			aveAnim.objectMain.children.length > 0
 		) {
 			for (var i = 0; i < aveAnim.animOBJ.frames+1; i++)
 				aveAnim.objectMain.children[i].visible = false;
-
 			aveAnim.objectMain.children[aveAnim.animOBJ.con].visible = true;
-			aveAnim.objectMain.position.set(0, 5, 0);
-			
 		}
 	}			
-	
+	aveAnim.objectMain.position.set(
+		Math.sin(aveAnim.animMOV.angulo), 
+		15 + Math.sin(aveAnim.animMOV.angulo), 
+		aveAnim.animMOV.mover);
+	aveAnim.animMOV.angulo += dTime;
+	aveAnim.animMOV.mover += dTime;
+	if (aveAnim.animMOV.mover > aveAnim.animMOV.maxMov) aveAnim.animMOV.mover = aveAnim.animMOV.minMov;
 }
 
-		
+	
 	function render() {
-		
+			
 		requestAnimationFrame(render);
 		
 		
@@ -239,8 +239,6 @@ function ecObjAnim(dTime)
 		ecObjAnim(deltaTime);
 		
 		
-			
-
 		var yaw = 0;
 		var forward = 0;
 		if (keys["A"]) {

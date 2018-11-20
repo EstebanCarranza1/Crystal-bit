@@ -12,5 +12,5 @@ newmtl _ave_01_01__01_01_01initialShadingGroup
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka textpato.png
-	map_Kd textpato.png
+	map_Ka textpato.jpg
+	map_Kd textpato.jpg
