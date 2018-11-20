@@ -114,6 +114,15 @@
         </div>
     </div>
 </div>
+<div class="col s12 m6 offset-m3 l8 offset-l2 center clsElegirCancionPanel" id="idEC_GuardarCambios">
+    <div class="card horizontal blue hoverable">
+        <div class="card-stacked">
+            <div class="card-action white-text">
+                Guardar cambios y reinciar partida
+            </div>
+        </div>
+    </div>
+</div>
 <div class="col s12 m6 offset-m3 l8 offset-l2 center clsElegirCancionPanel clsEmpezarAJugar" id="idEC_IniciarJuego">
     <div class="card horizontal blue hoverable">
         <div class="card-stacked">
@@ -163,7 +172,18 @@
         var total_musica = lista_musica.length;
         var index = 1;
         var pathMusic = "media/audio/";
-
+        $("#idEC_GuardarCambios").click(function(){
+            //alert("Se reniciará la partida");
+            localStorage.setItem("gamepoints_01", 0);
+            localStorage.setItem("gamepoints_02", 0);
+            localStorage.setItem("total_cristales", $("#total_cristales").val());
+            localStorage.setItem("total_obstaculos", $("#total_obstaculos").val());
+            localStorage.setItem("alias",           lista_musica[index].alias);
+            localStorage.setItem("nombre_fisico",   lista_musica[index].nombre_fisico);
+            localStorage.setItem("extension",       lista_musica[index].extension);
+            localStorage.setItem("pathMusic",       pathMusic);
+            location.href ="game.php";
+        });
          
         
         function setEspec()

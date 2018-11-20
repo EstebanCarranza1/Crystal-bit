@@ -56,7 +56,7 @@
                 <div class="card horizontal blue hoverable">
                     <div  class="card-stacked">
                         <div class="card-action">
-                        <a href="#"  class="white-text">Cambiar música</a>
+                        <a href="#"  class="white-text">Cambiar música, cantidad de obstaculos y cristales</a>
                         </div>
                     </div>
                 </div>

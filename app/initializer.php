@@ -126,6 +126,7 @@
             $(".clsRegresar").hide();
             $(".clsPanelPuntuaciones").hide();
             $(".clsElegirCancionPanel").hide();
+            
 
             function ocultar_menu_principal(ocultar)
             {
@@ -141,12 +142,14 @@
                     $(".clsIniciarJuego").show();
                     $(".clsComoJugar").show();
                     $(".clsPuntuaciones").show(); 
+                     
                 }
             }
             
             $(".clsIniciarJuego").click(function(){
                 ocultar_menu_principal(true);
                 $(".clsElegirCancionPanel").show();
+                $("#idEC_GuardarCambios").hide();
                 $(".clsRegresar").show();
             });
             $(".clsComoJugar").click(function(){
