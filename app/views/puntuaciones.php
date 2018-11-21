@@ -50,9 +50,12 @@
                     </table>
                 </div>
                 
+                
             </div>
 
-
+                <div class="col s12 center">
+                    <?php include 'facebook.php'; ?>
+                </div>
 
             </div>
         </div>
