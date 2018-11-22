@@ -728,7 +728,7 @@ function render() {
         finalizar_juego();
 
     
-    if(total_cristales < 5 && !activar_glitch)
+    if(total_cristales < 3 && !activar_glitch)
     {
         activar_glitch=true;
         renderPass.renderToScreen = false;
